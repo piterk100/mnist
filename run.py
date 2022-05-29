@@ -57,6 +57,6 @@ def backProp(p, *args):
     return mf.backpropagation(p, *args)
 
 
-res1 = optimize.minimize(costFunction, initial_nn_params, fprime=backProp, args=args)
+res1 = optimize.fmin_cg(costFunction, initial_nn_params, fprime=backProp, args=args)
 
 print(res1)

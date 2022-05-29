@@ -1,12 +1,6 @@
 import math
 import numpy as np
 
-class Theta_grad():
-    def __init__(self, Theta1_grad, Theta2_grad):
-        self.Theta1_grad = Theta1_grad
-        self.Theta2_grad = Theta2_grad
-
-
 def sigmoid(z):
     g = 1/(1+math.e**(-z))
     g_prim = g*(1-g)
@@ -26,8 +20,7 @@ def backpropagation(params, *args):
 
     Theta1, Theta2 = unpack_thetas(
         params, input_layer_size, hidden_layer_size, num_labels)
-    #T_g = Theta_grad(np.zeros(Theta1.shape), np.zeros(Theta2.shape))   
-
+        
     Theta1_grad = np.zeros(Theta1.shape)
     Theta2_grad = np.zeros(Theta2.shape)
 
@@ -73,8 +66,6 @@ def nnCostFunction(params, *args):
 
     Theta1, Theta2 = unpack_thetas(
         params, input_layer_size, hidden_layer_size, num_labels)
-
-    #res = backpropagation(params, X, Y, m, lmbd, input_layer_size, hidden_layer_size, num_labels)
 
     X = X.reshape([m, 784])
     X = np.concatenate((np.ones([m, 1]), X), axis=1)
