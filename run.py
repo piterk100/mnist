@@ -2,6 +2,8 @@
 
 import math_functions as mf
 import numpy as np
+from scipy import optimize
+
 f_train_images = open('train-images.idx3-ubyte', 'rb')
 f_train_labels = open('train-labels.idx1-ubyte', 'rb')
 
@@ -35,8 +37,26 @@ num_labels = 10
 Theta1 = np.random.rand(25, 785) % 0.24 - 0.12
 Theta2 = np.random.rand(10, 26) % 0.24 - 0.12
 
-print(mf.costFunction(train_images, train_labels,
-      Theta1, Theta2, train_set_size, num_labels, 1))
+# print(mf.nnCostFunction(train_images, train_labels,
+#      Theta1, Theta2, train_set_size, num_labels, 1))
 
-mf.backpropagation(train_images, train_labels, Theta1,
-                   Theta2, train_set_size, 1, 10)
+# mf.backpropagation(train_images, train_labels, Theta1,
+#                   Theta2, train_set_size, 1)
+
+initial_nn_params = np.concatenate((Theta1.flatten(), Theta2.flatten()))
+
+lmbda = 1
+
+args = (train_images, train_labels, train_set_size, lmbda, input_layer_size, hidden_layer_size, num_labels)
+
+def costFunction(p, *args):
+    return mf.nnCostFunction(p, *args)
+
+
+def backProp(p, *args):
+    return mf.backpropagation(p, *args)
+
+
+res1 = optimize.minimize(costFunction, initial_nn_params, fprime=backProp, args=args)
+
+print(res1)
