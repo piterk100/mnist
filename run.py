@@ -47,7 +47,9 @@ initial_nn_params = np.concatenate((Theta1.flatten(), Theta2.flatten()))
 
 lmbda = 1
 
-args = (train_images, train_labels, train_set_size, lmbda, input_layer_size, hidden_layer_size, num_labels)
+args = (train_images, train_labels, train_set_size, lmbda,
+        input_layer_size, hidden_layer_size, num_labels)
+
 
 def costFunction(p, *args):
     return mf.nnCostFunction(p, *args)
@@ -57,6 +59,7 @@ def backProp(p, *args):
     return mf.backpropagation(p, *args)
 
 
-res1 = optimize.fmin_cg(costFunction, initial_nn_params, fprime=backProp, args=args)
+res1 = optimize.fmin_cg(costFunction, initial_nn_params,
+                        fprime=backProp, args=args)
 
 print(res1)

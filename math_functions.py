@@ -1,6 +1,7 @@
 import math
 import numpy as np
 
+
 def sigmoid(z):
     g = 1/(1+math.e**(-z))
     g_prim = g*(1-g)
@@ -15,12 +16,13 @@ def unpack_thetas(thetas, input_layer_size, hidden_layer_size, num_labels):
     t2 = thetas[t1_end:].reshape((num_labels, hidden_layer_size + 1))
     return t1, t2
 
+
 def backpropagation(params, *args):
     X, Y, m, lmbd, input_layer_size, hidden_layer_size, num_labels = args
 
     Theta1, Theta2 = unpack_thetas(
         params, input_layer_size, hidden_layer_size, num_labels)
-        
+
     Theta1_grad = np.zeros(Theta1.shape)
     Theta2_grad = np.zeros(Theta2.shape)
 
